@@ -255,6 +255,11 @@ def editMenuItem(restaurant_id, menu_id):
         return render_template('editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, item=editedItem)
 
 
+def createUser(login_session):
+    credentials_json = login_session.get('credentials')
+    if credentials_json:
+        credentials = OAuth2Credentials.from_json(credentials_json)
+
 # Delete a menu item
 @app.route('/restaurant/<int:restaurant_id>/menu/<int:menu_id>/delete', methods=['GET', 'POST'])
 def deleteMenuItem(restaurant_id, menu_id):
