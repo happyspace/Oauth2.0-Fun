@@ -3,27 +3,30 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-
+    <meta name="google-signin-scope" content="profile email">
+    <meta name="google-signin-client_id" content="979379620597-3qspm09ln57eecnt9712iqbglqqbvt7l.apps.googleusercontent.com">
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-    <script src="https://apis.google.com/js/client:platform.js?onload=start" async defer></script>
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 <body>
 
 <div id="signinButton">
-    <span class="g-signin"
-            data-scope="openid email profile"
+    <span class="g-signin2"
+            data-scope="openid email profile "
             data-clientid="979379620597-3qspm09ln57eecnt9712iqbglqqbvt7l.apps.googleusercontent.com"
             data-redirecturi="postmessage"
             data-accesstype="offline"
-            data-cookiepolicy="single_host_origin"
-            data-callback="signInCallback"
-            data-approvalprompt="force">
+            data-cookie_policy="single_host_origin"
+            data-onsuccess="signInCallback"
+            data-approvalprompt="force"
+            data-theme="light">
+
     </span>
 </div>
 <div id="result"></div>
 
 <script>
-    function signInCallback(authResult){
+   function signInCallback(authResult){
         if (authResult['code']) {
             $('#signinButton').attr('style', 'display: none')
 

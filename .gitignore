@@ -1,2 +1,14 @@
 .idea/
 *.pyc
+
+*.DS_Store
+.git
+*.zip
+
+env
+
+node_modules/
+npm-debug.log
+bower_components/
+.module-cache
+build/
