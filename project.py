@@ -85,16 +85,11 @@ def gconnect():
     login_session['username'] = data["name"]
     login_session['picture'] = data["picture"]
     login_session['email'] = data["email"]
+    # create user if one does not exist
+    user = get_user_id(data["email"])
+    if not user:
+        create_user(login_session)
 
-    output = ''
-
-    output += '<h1> Welcome, '
-    #    output += login_session['username']
-    output += '!<h1>'
-    #    output += '<img src="'
-    #    output += login_session['picture']
-    #    output += '" style = "width: 300px; height: 300px; border-radius: 150px; '
-    #    output += '-webkit-border-radius: 150px; -moz-border-radius: 150px;'
     flash("you are now logged in as %s" % login_session['email'])
     return redirect(url_for('show_restaurants'))
 
@@ -234,7 +229,7 @@ def new_menu_item(restaurant_id):
         session.add(new_item)
         session.commit()
         flash('New Menu %s Item Successfully Created' % new_item.name)
-        return redirect(url_for('showMenu', restaurant_id=restaurant_id))
+        return redirect(url_for('show_menu', restaurant_id=restaurant_id))
     else:
         return render_template('newmenuitem.html', restaurant_id=restaurant_id)
 
@@ -258,7 +253,7 @@ def edit_menu_item(restaurant_id, menu_id):
         session.add(edited_item)
         session.commit()
         flash('Menu Item Successfully Edited')
-        return redirect(url_for('showMenu', restaurant_id=restaurant_id))
+        return redirect(url_for('show_menu', restaurant_id=restaurant_id))
     else:
         return render_template('editmenuitem.html', restaurant_id=restaurant_id, menu_id=menu_id, item=edited_item)
 
@@ -297,7 +292,7 @@ def delete_menu_item(restaurant_id, menu_id):
         session.delete(item_to_delete)
         session.commit()
         flash('Menu Item Successfully Deleted')
-        return redirect(url_for('showMenu', restaurant_id=restaurant_id))
+        return redirect(url_for('show_menu', restaurant_id=restaurant_id))
     else:
         return render_template('deleteMenuItem.html', item=item_to_delete)
 
