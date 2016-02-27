@@ -45,8 +45,9 @@ def gconnect():
     # Check that the access token is valid.
     access_token = credentials.access_token
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s' % access_token)
-    h = httplib2.Http()
-    result = json.loads(h.request(url, 'GET')[1])
+    http = httplib2.Http()
+    json_encode = http.request(url, 'GET')[1].decode('utf-8')
+    result = json.loads(json_encode)
     # If there was an error in the access token info, abort.
     if result.get('error') is not None:
         response = make_response(json.dumps(result.get('error')), 500)
@@ -267,7 +268,7 @@ def create_user(user_login_session):
                         picture=user_login_session['picture'])
         session.add(new_user)
         session.commit()
-        user = session.query(User).filter_by(email=user_login_session['email'])
+        user = session.query(User).filter_by(email=user_login_session['email']).one()
         return user.id
 
 
